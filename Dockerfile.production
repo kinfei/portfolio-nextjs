@@ -2,7 +2,7 @@
 # https://github.com/vercel/next.js/blob/canary/examples/with-docker/Dockerfile
 
 # Install dependencies only when needed
-FROM node:16-alpine AS deps
+FROM node:18-alpine AS deps
 
 ENV NODE_ENV=production
 
@@ -15,7 +15,7 @@ COPY package.json yarn.lock ./
 RUN yarn install --frozen-lockfile && yarn add typescript eslint @types/node -D
 
 # Rebuild the source code only when needed
-FROM node:16-alpine AS builder
+FROM node:18-alpine AS builder
 
 ENV NODE_ENV=production
 # Next.js collects completely anonymous telemetry data about general usage.
@@ -36,7 +36,7 @@ COPY styles ./styles
 RUN yarn build
 
 # Production image, copy all the files and run next
-FROM node:16-alpine AS runner
+FROM node:18-alpine AS runner
 WORKDIR /app
 
 ENV NODE_ENV=production
